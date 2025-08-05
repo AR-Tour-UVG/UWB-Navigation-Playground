@@ -14,8 +14,7 @@ public static class UWBBridge
 {   
     // Import the native function to get coordinates from UWB
     // The function returns a pointer to a JSON string containing the coordinates
-    [DllImport("__Internal")]
-    private static extern IntPtr getCoords(); 
+    [DllImport("UWBplugin")] private static extern IntPtr getCoords(); 
 
     // Method to retrieve the UWB position as a Vector3
     // Returns null if the position cannot be retrieved or parsed
