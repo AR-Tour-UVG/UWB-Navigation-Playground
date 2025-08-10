@@ -10,3 +10,5 @@ import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
 import simd
+@_cdecl("getCoords")
+public func getCoords() -> Swift.UnsafeMutablePointer<Swift.CChar>

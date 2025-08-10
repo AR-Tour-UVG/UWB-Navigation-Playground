@@ -6,7 +6,7 @@
 	<dict>
 		<key>.DS_Store</key>
 		<data>
-		OLIHwacIWxevPZuNbawGXJvnSZ0=
+		oQehaSER9S0MM69hYBEja8KEMNc=
 		</data>
 		<key>Frameworks/EstimoteUWB.framework/EstimoteUWB</key>
 		<data>
@@ -26,19 +26,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		yyIVAcl0hQp1k9vgZMVfAk+nyPk=
+		4zU1A/IoGlJ4FzXy4noF8i45Gig=
+		</data>
+		<key>Modules/.DS_Store</key>
+		<data>
+		ZDdVkK8vCLpSNVWbVFBdn10cr2U=
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		hzX/NQmmGo43HDpD/hkOUwH9BFA=
+		qk5qz6KP6NE0jGuQHFCHHFHgTFk=
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		nuTXSELBrig/9rM6GIqoQ5nVHOU=
+		bhTPEvDMqwEaPt9qNHn+Ed7+MlE=
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		9JUPnXbp0GsA+ZT7oiMLv3SRLxw=
+		y8I4dQife2g5idCrwx3THXQo06w=
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -46,11 +50,11 @@
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		9JUPnXbp0GsA+ZT7oiMLv3SRLxw=
+		y8I4dQife2g5idCrwx3THXQo06w=
 		</data>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		9unwHCl/lmqcdEMd53FNTDkg7r8=
+		UGX36N5NlQVWmWTpIx9T7dDDPnA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -99,21 +103,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			K/kQ7C4dLv2UL508fGJZA0sxXND32tAEO6FHRp7zjDE=
+			wZ9+6tpW3xHUa0ZsVhCH40CHb2CkZYD5Z8SJjluGi4E=
 			</data>
 		</dict>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bSfEpAoCVXmhlzcQLfRRQetxd+5I26TEaKD7x3w9bMY=
+			HmdqCTbORiVTX1MLcvpbTBCeTpevGMr/WEc0AypEysY=
 			</data>
 		</dict>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QDX2CcDtk9wj2SAdHHqTaZDfZzv/r82aydAGOQxH5ZQ=
+			9oOm3VsveSintWFENi/A+DiIC4tLXa7hGRFztfdUCfw=
 			</data>
 		</dict>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -127,14 +131,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QDX2CcDtk9wj2SAdHHqTaZDfZzv/r82aydAGOQxH5ZQ=
+			9oOm3VsveSintWFENi/A+DiIC4tLXa7hGRFztfdUCfw=
 			</data>
 		</dict>
 		<key>Modules/UWBplugin.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BB1jGEZN6g7U4uB0GaGEmyWhFgzBzcvJ5PM83FQgZbg=
+			eRlxNRFPK4GA64H17xinCXT8Vu2TbxOp/tg9i2xetZw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

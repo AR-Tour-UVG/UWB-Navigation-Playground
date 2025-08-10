@@ -1,17 +1,37 @@
 using UnityEngine;
 
+/// <summary>
+/// Visualizes the NavMesh path using a LineRenderer component.
+/// </summary>
 [RequireComponent(typeof(LineRenderer))]
-public class NavMeshPathDrawer : MonoBehaviour
+public class PathVisualizer : MonoBehaviour
 {
-    public AgentController controller;  // Reference to the controller script
-    public float yOffset = 0.015f;       // lift above floor to avoid z-fighting
-    public float updateHz = 5f;          // redraw rate
-    public float changeEpsilon = 0.01f;  // 1 cm tolerance
-    public float width = 0.05f;          // meters
+    [Header("References")]
+    [Tooltip("Reference to the AgentController that manages the NavMesh path.")]
+    public NavigationAgent controller;
 
-    LineRenderer line; // Reference to the LineRenderer component
-    float nextUpdate; // Time until the next update
-    Vector3[] lastCorners = System.Array.Empty<Vector3>();  // Last drawn path corners
+    [Header("Path Drawing Settings")]
+    [Tooltip("Vertical offset above the floor to avoid z-fighting.")]
+    [Range(0f, 0.05f)]
+    public float yOffset = 0.015f;       
+
+    [Tooltip("Number of times per second the path is redrawn.")]
+    [Range(1f, 15f)]
+    public float updateHz = 5f;
+
+    [Tooltip("Minimum positional change in meters before updating the path.")]
+    [Range(0.01f, 1f)]
+    public float changeEpsilon = 0.01f;
+
+    [Tooltip("Width of the drawn path in meters.")]
+    [Range(0.01f, 1f)]
+    public float width = 0.05f;
+
+    // Internal references
+    private LineRenderer line;                      // LineRenderer used to visualize the path
+    private float nextUpdate;                       // Next allowed update time
+    private Vector3[] lastCorners = System.Array.Empty<Vector3>();  // Previously drawn path corners
+
 
     /// <summary>
     /// Initializes the LineRenderer component.
@@ -64,9 +84,14 @@ public class NavMeshPathDrawer : MonoBehaviour
         lastCorners = (Vector3[])corners.Clone();
     }
 
+
     /// <summary>
     /// Checks if the path has changed significantly.
     /// </summary>
+    /// <param name="a">The first path array to compare.</param>
+    /// <param name="b">The second path array to compare.</param>
+    /// <param name="eps">The epsilon value for determining significant changes.</param>
+    /// <returns>True if the path has changed significantly; otherwise, false.</returns>
     bool PathChanged(Vector3[] a, Vector3[] b, float eps)
     {
         // Check if the arrays are null or of different lengths

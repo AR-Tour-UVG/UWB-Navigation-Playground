@@ -5,11 +5,13 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using System.IO;
 
-public static class IOSPostBuild
+public static class PostBuildProcessor
 {
     /// <summary>
     /// Post-process build steps for iOS.
     /// </summary>
+    /// <param name="target">The build target.</param>
+    /// <param name="path">The path to the built player.</param>
     [PostProcessBuild]
     public static void OnPostProcessBuild(BuildTarget target, string path)
     {

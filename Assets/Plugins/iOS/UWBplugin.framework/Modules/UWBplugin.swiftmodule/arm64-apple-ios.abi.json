@@ -100,6 +100,36 @@
         "declAttributes": [
           "RawDocComment"
         ]
+      },
+      {
+        "kind": "Function",
+        "name": "getCoords",
+        "printedName": "getCoords()",
+        "children": [
+          {
+            "kind": "TypeNominal",
+            "name": "UnsafeMutablePointer",
+            "printedName": "Swift.UnsafeMutablePointer<Swift.Int8>",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int8",
+                "printedName": "Swift.Int8",
+                "usr": "s:s4Int8V"
+              }
+            ],
+            "usr": "s:Sp"
+          }
+        ],
+        "declKind": "Func",
+        "usr": "c:(cm)getCoords",
+        "mangledName": "$s9UWBplugin9getCoordsSpys4Int8VGyF",
+        "moduleName": "UWBplugin",
+        "declAttributes": [
+          "AccessControl",
+          "CDecl"
+        ],
+        "funcSelfKind": "NonMutating"
       }
     ],
     "json_format_version": 8

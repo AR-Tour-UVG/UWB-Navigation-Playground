@@ -2,25 +2,42 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))] // Ensure the GameObject has a NavMeshAgent component
-public class AgentController : MonoBehaviour
+/// <summary>
+/// Controls the navigation agent's movement and pathfinding.
+/// </summary>
+[RequireComponent(typeof(NavMeshAgent))]
+public class NavigationAgent : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public Transform target;          // Destination in the scene
-    public float followSpeed = 5f;    // Smoothing speed towards UWB position
-    public float sampleRadius = 0.3f; // Max search radius for nearest NavMesh point
+    [Tooltip("Destination transform that the agent will attempt to reach.")]
+    public Transform target;
+
+    [Tooltip("Speed at which the agent moves toward the most recent UWB position.")]
+    [Range(0.5f, 10f)]
+    public float followSpeed = 5f;
+
+    [Tooltip("Maximum search radius for snapping to the nearest valid NavMesh position.")]
+    [Range(0.05f, 1f)]
+    public float sampleRadius = 0.3f;
 
     [Header("Path Recompute")]
-    public float pathRefreshHz = 5f;     // recompute path at most 5 Hz
-    public float minMoveToRepath = 0.1f; // 10 cm movement triggers repath
+    [Tooltip("Maximum frequency (in Hz) for recalculating the navigation path.")]
+    [Range(1f, 10f)]
+    public float pathRefreshHz = 5f;
 
-    private NavMeshAgent agent;       // NavMeshAgent for path calculation
-    private NavMeshPath navPath;      // The current path to the target
-    private Vector3 lastKnownPosition; // Last known position of the agent
+    [Tooltip("Minimum movement distance (in meters) before triggering a path recalculation.")]
+    [Range(0.01f, 1f)]
+    public float minMoveToRepath = 0.1f;
 
-    // internal repath state
+    // NavMesh components and path state
+    private NavMeshAgent agent;        // NavMeshAgent responsible for path calculation
+    private NavMeshPath navPath;       // Current computed path
+    private Vector3 lastKnownPosition; // Most recent valid NavMesh position from UWB data
+
+    // Internal state for path recalculation
     private float nextPathTime;
     private Vector3 lastPathFrom;
+
 
     /// <summary>
     /// Initializes the agent and sets up the NavMesh.
@@ -28,6 +45,7 @@ public class AgentController : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component
+
         // Disable automatic position and rotation updates
         agent.updatePosition = false;
         agent.updateRotation = false;
@@ -48,11 +66,13 @@ public class AgentController : MonoBehaviour
     {
         // Gate: wait until NavMesh is ready before enabling the agent
         agent.enabled = false; // Disable the NavMeshAgent to prevent movement before NavMesh is ready
+        bool logged = false; // Flag to log NavMesh readiness only once
         while (NavMesh.CalculateTriangulation().vertices.Length == 0)
         {
-            // If the NavMesh is not ready, wait until it is
+        #if UNITY_EDITOR
+            if (!logged) { Debug.LogWarning("Waiting for NavMesh to be ready..."); logged = true; }
+        #endif
             yield return null;
-            Debug.LogWarning("Waiting for NavMesh to be ready...");
         }
 
         // Snap starting transform to nearest on-Mesh position
@@ -72,7 +92,7 @@ public class AgentController : MonoBehaviour
     void Update()
     {
         // Attempt to get UWB position from the bridge
-        if (UWBBridge.GetUWBPosition(out Vector3 uwbPosition))
+        if (UltraWidebandLocator.TryGetPosition(out Vector3 uwbPosition))
         {
             // Preserve current height (Y)
             uwbPosition.y = transform.position.y;

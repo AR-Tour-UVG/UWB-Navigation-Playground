@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -16637128204966094, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_Name
+      value: RoomOBJ
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
       propertyPath: m_Name
       value: Test-Room
@@ -338,8 +342,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 406575545}
-  offset: {x: 0, y: 5, z: 0}
-  smoothSpeed: 0.125
+  useOrthographic: 1
+  orthoSize: 1.6
+  height: 2
+  offsetXZ: {x: 0, y: 0}
+  smoothTime: 0.18
+  roomOrigin: {x: 0, y: 0}
+  roomSize: {x: 3.33, y: 2.57}
+  edgePadding: 0.05
 --- !u!1 &406575540
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +365,7 @@ GameObject:
   - component: {fileID: 406575541}
   - component: {fileID: 406575546}
   m_Layer: 0
-  m_Name: Agent
+  m_Name: NavigationAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,7 +742,7 @@ GameObject:
   - component: {fileID: 529117601}
   - component: {fileID: 529117600}
   m_Layer: 0
-  m_Name: PathPainter
+  m_Name: PathVisualizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
