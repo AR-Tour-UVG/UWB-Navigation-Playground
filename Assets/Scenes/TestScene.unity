@@ -167,9 +167,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1194529299724452372, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1194529299724452372, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1194529299724452372, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1194529299724452372, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1194529299724452372, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 556986241603002400, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
     - target: {fileID: -16637128204966094, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
       propertyPath: m_Name
       value: RoomOBJ
+      objectReference: {fileID: 0}
+    - target: {fileID: -16637128204966094, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ae1946dd4ef409741bd603c7f5e8424f, type: 3}
       propertyPath: m_Name
