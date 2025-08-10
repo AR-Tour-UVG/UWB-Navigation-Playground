@@ -54,6 +54,7 @@ public static class UWBBridge
 
             // Read the JSON string from the pointer
             string json = Marshal.PtrToStringAnsi(coordsPtr);
+            Debug.Log($"UWB: Received JSON from UWB plugin: {json}");
 
             // Filter invalid JSON or null coordinate cases
             if (string.IsNullOrEmpty(json) || json == "{}" || json.Contains("null"))
