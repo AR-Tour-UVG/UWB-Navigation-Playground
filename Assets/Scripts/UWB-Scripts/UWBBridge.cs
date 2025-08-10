@@ -15,13 +15,18 @@ public static class UWBBridge
 // Check if the platform is iOS and import the required native functions
     #if UNITY_IOS && !UNITY_EDITOR
         // Import the native function from the iOS plugin
-        // "__Internal" tells Unity to look inside the app binary for this symbol
         // The function returns a pointer to a JSON string containing the coordinates
         [DllImport("__Internal")] 
-        private static extern IntPtr getCoords(); 
+        private static extern IntPtr getCoords();
+
+        // Import the native function to free the allocated string
+        // The function takes a pointer to the string to be freed
+        [DllImport("__Internal")]
+        private static extern void freeCString(IntPtr ptr);
     #else
         // Stub implementation for non-iOS platforms
         private static IntPtr getCoords() => IntPtr.Zero; // Always returns null pointer
+        private static void freeCString(IntPtr ptr) { } // No-op for non-iOS platforms
         private static bool warned = false; // Flag to indicate if the warning has been shown
     #endif
 
@@ -52,6 +57,9 @@ public static class UWBBridge
                 return false; // Failed to get coordinates
             }
 
+        // Try to extract coordinate values from JSON
+        try
+        {
             // Read the JSON string from the pointer
             string json = Marshal.PtrToStringAnsi(coordsPtr);
             Debug.Log($"UWB: Received JSON from UWB plugin: {json}");
@@ -62,20 +70,21 @@ public static class UWBBridge
                 Debug.LogWarning("UWB: Received invalid JSON or null coordinates from UWB plugin.");
                 return false; // Invalid JSON or null coordinates
             }
-
-            // Try to extract coordinate values from JSON
-            try
-            {
-                // Parse the JSON string into a UWBPosition object
-                UWBPosition uwbPosition = JsonUtility.FromJson<UWBPosition>(json);
-                // Map plugin X -> Unity X, plugin Y -> Unity Z, ignore plugin Z -> Unity Y
-                position = new Vector3(uwbPosition.x, float.NaN, uwbPosition.y);
-                return true; // Successfully retrieved and parsed position
+            
+            // Parse the JSON string into a UWBPosition object
+            UWBPosition uwbPosition = JsonUtility.FromJson<UWBPosition>(json);
+            // Map plugin X -> Unity X, plugin Y -> Unity Z, ignore plugin Z -> Unity Y
+            position = new Vector3(uwbPosition.x, float.NaN, uwbPosition.y);
+            return true; // Successfully retrieved and parsed position
             }
             catch (Exception ex)
             {
                 Debug.LogError($"UWB: Failed to parse UWB position JSON. - {ex.Message}");
                 return false; // Failed to parse JSON
+            }
+            finally
+            {
+                freeCString(coordsPtr); // Always free the allocated string
             }
         #endif
     }

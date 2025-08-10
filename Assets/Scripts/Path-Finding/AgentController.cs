@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,27 +15,43 @@ public class AgentController : MonoBehaviour
     private NavMeshPath navPath;      // The current path to the target
     private Vector3 lastKnownPosition; // Last known position of the agent
 
-    /// <summary>
-    /// Initializes the NavMeshAgent and sets up the pathfinding.
-    /// </summary>
-    void Start()
+
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component
-
         // Disable automatic position and rotation updates
         agent.updatePosition = false;
         agent.updateRotation = false;
 
         // Initialize the NavMeshPath and last known position
-        navPath = new NavMeshPath(); // Initialize the NavMeshPath
-        lastKnownPosition = transform.position; // Store the initial position
+        navPath = new NavMeshPath();
+        lastKnownPosition = transform.position;
+    }
 
-        // Verify NavMesh exists at runtime
-        var triangulation = NavMesh.CalculateTriangulation();
-        if (triangulation.vertices.Length == 0)
+    /// <summary>
+    /// Initializes the NavMeshAgent and sets up the pathfinding.
+    /// </summary>
+    /// <returns>
+    /// An enumerator for the coroutine.
+    /// </returns>
+    private IEnumerator Start()
+    {
+        // Gate: wait until NavMesh is ready before enabling the agent
+        agent.enabled = false; // Disable the NavMeshAgent to prevent movement before NavMesh is ready
+        while (NavMesh.CalculateTriangulation().vertices.Length == 0)
         {
-            Debug.LogError("UWB: No NavMesh loaded. Ensure NavMeshSurface is baked and scene is included in build.");
+            // If the NavMesh is not ready, wait until it is
+            yield return null;
+            Debug.LogWarning("Waiting for NavMesh to be ready...");
         }
+
+        // Snap starting transform to nearest on-Mesh position
+        if (NavMesh.SamplePosition(transform.position, out var hit, 1f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+        }
+
+        agent.enabled = true; // Enable the NavMeshAgent after confirming NavMesh is ready
     }
 
     /// <summary>
@@ -76,8 +93,9 @@ public class AgentController : MonoBehaviour
         // else: No valid UWB position found this frame -> keep the last known position
     }
 
-    public NavMeshPath GetCurrentPath()
-    {
-        return navPath;
-    }
+    /// <summary>
+    /// Gets the current NavMesh path.
+    /// </summary>
+    /// <returns>The current NavMesh path.</returns>
+    public NavMeshPath GetCurrentPath() => navPath;
 }
