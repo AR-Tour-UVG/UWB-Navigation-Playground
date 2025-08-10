@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,7 +12,7 @@ public class AgentController : MonoBehaviour
 
     [Header("Path Recompute")]
     public float pathRefreshHz = 5f;     // recompute path at most 5 Hz
-    public float minMoveToRepath = 0.5f; // 50 cm movement triggers repath
+    public float minMoveToRepath = 0.1f; // 10 cm movement triggers repath
 
     private NavMeshAgent agent;       // NavMeshAgent for path calculation
     private NavMeshPath navPath;      // The current path to the target
@@ -23,6 +22,9 @@ public class AgentController : MonoBehaviour
     private float nextPathTime;
     private Vector3 lastPathFrom;
 
+    /// <summary>
+    /// Initializes the agent and sets up the NavMesh.
+    /// </summary>
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component
@@ -121,12 +123,15 @@ public class AgentController : MonoBehaviour
 #if UNITY_EDITOR
         // else: No valid UWB position found this frame -> keep the last known position
         // but get calculated path to target just for debugging purposes
-        NavMesh.CalculatePath(
-            lastKnownPosition,
-            target.position,
-            NavMesh.AllAreas,
-            navPath
-        );
+        if (target != null)
+        {
+            NavMesh.CalculatePath(
+                lastKnownPosition,
+                target.position,
+                NavMesh.AllAreas,
+                navPath
+            );
+        }
 #endif
     }
 
