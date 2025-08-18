@@ -92,7 +92,7 @@ public class NavigationAgent : MonoBehaviour
     void Update()
     {
         // Attempt to get UWB position from the bridge
-        if (UltraWidebandLocator.TryGetPosition(out Vector3 uwbPosition))
+        if (UWBLocator.TryGetPosition(out Vector3 uwbPosition))
         {
             // Preserve current height (Y)
             uwbPosition.y = transform.position.y;
